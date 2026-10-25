@@ -14,6 +14,8 @@ Press **⌥Space** to pin a window on top. Press it again to unpin it.
 
 [Download](https://github.com/bunkhq/Pinpin/releases/latest) · [Usage](docs/USAGE.md) · [Permissions](docs/PERMISSIONS.md) · [How it works](docs/HOW-IT-WORKS.md)
 
+<img src="assets/demo.gif" width="720" alt="Animation: a Notes window is pinned with ⌥Space and stays above Safari while Safari is clicked and dragged over it, then is unpinned with ⌥Space and drops behind Safari.">
+
 </div>
 
 ---
