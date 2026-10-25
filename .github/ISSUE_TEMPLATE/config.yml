@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Usage guide
+    url: https://github.com/bunkhq/Pinpin/blob/main/docs/USAGE.md
+    about: Every feature and setting, explained.
+  - name: Permissions help
+    url: https://github.com/bunkhq/Pinpin/blob/main/docs/PERMISSIONS.md
+    about: Fixes for Screen Recording and Accessibility problems.

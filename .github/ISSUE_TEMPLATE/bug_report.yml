@@ -1,0 +1,59 @@
+name: Bug report
+description: Something in Pinpin doesn't work as expected
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting! If the problem involves permissions, please check [Permissions](https://github.com/bunkhq/Pinpin/blob/main/docs/PERMISSIONS.md) first.
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: What did you do, what did you expect, and what happened instead?
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Open Safari
+        2. Press ⌥Space
+        3. ...
+    validations:
+      required: true
+  - type: input
+    id: app
+    attributes:
+      label: App whose window you pinned
+      placeholder: e.g. Safari 19, Zoom, Terminal
+  - type: input
+    id: pinpin-version
+    attributes:
+      label: Pinpin version
+      description: In Finder, select Pinpin in Applications and choose File → Get Info.
+      placeholder: e.g. 1.0.0
+    validations:
+      required: true
+  - type: input
+    id: macos-version
+    attributes:
+      label: macOS version
+      placeholder: e.g. macOS 15.3
+    validations:
+      required: true
+  - type: dropdown
+    id: mac
+    attributes:
+      label: Mac type
+      options:
+        - Apple Silicon
+        - Intel
+    validations:
+      required: true
+  - type: textarea
+    id: extra
+    attributes:
+      label: Screenshots, recordings or logs
+      description: Drag files here. Anything from Console.app filtered by "Pinpin" helps too.
