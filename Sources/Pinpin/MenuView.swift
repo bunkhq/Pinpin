@@ -160,15 +160,30 @@ struct MenuView: View {
     }
 
     private var footer: some View {
-        HStack {
-            Text("Click a window to pin it on top.")
-                .font(.caption)
-                .foregroundStyle(.secondary)
-            Spacer()
-            Button("Quit") { NSApp.terminate(nil) }
-                .keyboardShortcut("q")
+        VStack(alignment: .leading, spacing: 6) {
+            HStack {
+                Text("Click a window to pin it on top.")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                Spacer()
+                Button("Quit") { NSApp.terminate(nil) }
+                    .keyboardShortcut("q")
+            }
+            HStack {
+                Text("Pinpin \(Self.appVersion)")
+                    .foregroundStyle(.tertiary)
+                    .textSelection(.enabled)
+                Spacer()
+                Button("Check for Updates…") { NSWorkspace.shared.open(Self.latestReleaseURL) }
+                    .buttonStyle(.link)
+            }
+            .font(.caption)
         }
     }
+
+    private static let appVersion =
+        Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "?"
+    private static let latestReleaseURL = URL(string: "https://github.com/bunkhq/Pinpin/releases/latest")!
 
     private func grant(_ permission: Permission) {
         Permissions.request(permission)
