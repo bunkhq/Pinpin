@@ -49,7 +49,6 @@ A pinned window's own sheets, dialogs, and popovers count as part of it. They do
 ## Known limitations
 
 - **The mirror is view-only.** While another app is focused, scrolling over a pinned window doesn't reach it. The first click on a mirror focuses the real window instead of passing through to what you clicked. Turn on [Focus pinned windows on hover](USAGE.md#focus-pinned-windows-on-hover) to avoid both.
-- **Pins don't persist.** Quitting, relaunching, or logging out clears every pin.
 - **Screen Recording needs a relaunch.** macOS applies a new grant only after Pinpin restarts. See [Permissions](PERMISSIONS.md#screen-recording-is-on-but-pinpin-says-its-missing).
 - **The hotkey can't be a key on its own.** It needs a modifier, except for function keys. See [Changing the hotkey](USAGE.md#changing-the-hotkey).
 - **Not notarized.** Pinpin isn't signed with an Apple Developer ID, so macOS blocks the first launch. See [Install](../README.md#install).

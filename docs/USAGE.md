@@ -32,11 +32,12 @@ Rules for hotkeys:
 
 ## The menu bar dropdown
 
-Click the pin icon in the menu bar to open the dropdown. The dropdown has three parts:
+Click the pin icon in the menu bar to open the dropdown. The dropdown has four parts:
 
 1. **Header:** how many windows are pinned, plus a **Grant** banner for each permission Pinpin is missing.
 2. **Settings:** hotkey and toggles. See [Settings](#settings).
 3. **Window list:** see below.
+4. **Footer:** **Quit**, the Pinpin version, and **Check for Updates…**, which opens the latest release on GitHub.
 
 ### Window list
 
@@ -61,7 +62,7 @@ Pins are numbered in the order you make them: 1, 2, 3, and so on.
 
 - **A higher number always sits above a lower one,** whichever window has focus. For example, pin #2 stays above pin #1 even while you're typing in #1.
 - **Unpinning closes the gap.** If you unpin #3 of 5, the old #4 and #5 become #3 and #4. Their order relative to each other doesn't change.
-- **Pins don't survive a relaunch.** Quitting or restarting Pinpin clears every pin.
+- **Pins don't survive a relaunch.** Quitting or restarting Pinpin clears every pin. This is by design: pinning is meant for the task at hand.
 
 ## Focus pinned windows on hover
 
