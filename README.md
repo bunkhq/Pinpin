@@ -1,84 +1,64 @@
+<div align="center">
+
 <img src="assets/icon.png" width="128" height="128" alt="Pinpin icon">
 
 # Pinpin
 
-A macOS menu bar app that keeps any window always on top. Press **⌥Space** on a window to pin it on top, and press it again to unpin it. Free, with no app window: everything lives in the menu bar.
+**Keep any window on top on macOS.**
+
+Press **⌥Space** to pin a window on top. Press it again to unpin it.
+
+[![Latest release](https://img.shields.io/github/v/release/bunkhq/Pinpin)](https://github.com/bunkhq/Pinpin/releases/latest)
+[![macOS 14+](https://img.shields.io/badge/macOS-14%2B-blue)](#requirements)
+[![License: MIT](https://img.shields.io/badge/license-MIT-green)](LICENSE)
+
+[Download](https://github.com/bunkhq/Pinpin/releases/latest) · [Usage](docs/USAGE.md) · [Permissions](docs/PERMISSIONS.md) · [How it works](docs/HOW-IT-WORKS.md)
+
+</div>
+
+---
+
+## Features
+
+- **Pin any window** with a global hotkey or from the menu bar list.
+- **Pin several windows.** Pins are numbered, and a higher number always stays above a lower one.
+- **Focus on hover** (optional). Pointing at a pinned window gives it focus, and focus goes back when you move away.
+- **Menu bar only.** Pinpin has no Dock icon and no app window.
+- **Universal app** for Apple Silicon and Intel Macs.
+
+## Requirements
+
+- macOS 14 Sonoma or later
+- **Screen Recording** and **Accessibility** permissions. See [Permissions](docs/PERMISSIONS.md) for what each one is used for.
 
 ## Install
 
-Download the latest `Pinpin-x.y.z.dmg` from [Releases](https://github.com/bunkhq/Pinpin/releases/latest), open it, and drag **Pinpin** into **Applications**. It runs on Apple Silicon and Intel Macs.
+1. Download `Pinpin-x.y.z.dmg` from the [latest release](https://github.com/bunkhq/Pinpin/releases/latest).
+2. Open the DMG and drag **Pinpin** into **Applications**.
+3. Open Pinpin. Pinpin isn't signed with an Apple Developer ID, so macOS blocks the first launch. Click **Done**, then go to **System Settings → Privacy & Security** and click **Open Anyway**.
 
-Pinpin isn't signed with an Apple Developer ID, so macOS blocks it the first time you open it. To allow it:
-
-1. Open Pinpin, and click **Done** when macOS says it can't verify it.
-2. Go to **System Settings → Privacy & Security**, scroll down, and click **Open Anyway** next to the Pinpin message.
-
-Or, in Terminal: `xattr -dr com.apple.quarantine /Applications/Pinpin.app`
-
-Every release is signed with the same certificate, so Screen Recording and Accessibility stay granted when you update.
-
-## Build & run
-
-Requires macOS 14+ and the Swift toolchain (Command Line Tools are enough).
+You can skip step 3 by running this in Terminal instead:
 
 ```sh
-./scripts/build-app.sh --run   # builds build/Pinpin.app and launches it
+xattr -dr com.apple.quarantine /Applications/Pinpin.app
 ```
 
-**One-time signing setup:**
+## Quick start
 
-```sh
-./scripts/setup-signing.sh
-```
+1. Focus the window you want to keep on top and press **⌥Space**.
+2. Press **⌥Space** on that window again to unpin it.
+3. To pin from a list, change the hotkey, or adjust settings, click the pin icon in the menu bar.
 
-This creates a self-signed "Pinpin Local Signing" certificate in your login keychain, and `build-app.sh` signs every build with it. macOS ties privacy permissions to the app's signature, so a stable signature means you grant **Screen Recording** and **Accessibility** once and they survive rebuilds. Without it, builds are signed ad-hoc, and macOS treats each rebuild as a new app and asks again.
+See [Usage](docs/USAGE.md) for every feature and setting.
 
-Pinpin only prompts for permissions on its first launch. After that, anything missing shows as a "Grant" banner in the dropdown. **Grant** checks with macOS first and does nothing if the permission is already there. Otherwise it asks whether you've already turned it on: if so, it relaunches Pinpin (Screen Recording only applies after a relaunch), or explains how to replace a stale entry. Once a permission has been granted, Pinpin remembers it and stops showing its banner. It only asks again if a pin actually fails without it.
+## Documentation
 
-## Releasing
-
-Bump `CFBundleShortVersionString` (and `CFBundleVersion`) in `Resources/Info.plist`, commit, push, and run:
-
-```sh
-./scripts/release.sh               # build a universal DMG and publish GitHub release vX.Y.Z
-./scripts/release.sh --no-publish  # same, but stop after build/Pinpin-X.Y.Z.dmg
-```
-
-## Using it
-
-Click the pin in the menu bar to:
-
-- **Record a new hotkey** (the default is ⌥Space; ↺ resets it)
-- **Turn sound effects and notifications on or off** separately. Each toggle plays a soft chime (rising for on, falling for off) and shows a small blue "Activated" or red "Deactivated" pill at the bottom of the screen for about a second.
-- **Focus pinned windows on hover** (off by default). Resting the pointer on a pinned window focuses it, so your first click or keystroke goes straight to it. If you leave without clicking or typing, focus goes back to the window you were using. Where pinned windows overlap, the one with the highest pin number wins. Hover focus pauses while the Pinpin dropdown is open.
-- **Open at login** (on by default; also listed in System Settings → General → Login Items)
-- **Pin any window** by clicking it in the list; pinned windows are highlighted blue, show their pin number, and sit at the top of the list in pin order. Other windows follow, most recently focused first. Unpinned windows on other desktops or minimized windows are listed in their own section, and pinning one brings it to you. The dropdown stays open and on top while you pin.
-- **Unpin all windows** at once
-
-## How it works
-
-macOS doesn't let one app change another app's window level without disabling SIP. Pinpin does this instead:
-
-1. Streams each pinned window with **ScreenCaptureKit** and keeps a floating, click-through panel exactly over it.
-2. Whenever you might be using another window, the panel shows a **live mirror** of the pinned window, so it stays on top with no fade or flash. That covers any click outside the pinned window, any app switch (including ⌘Tab), and any time another window overlaps it. The mirror goes up *before* macOS reorders the windows.
-3. **Pins are numbered** in the order you pin them (1, 2, 3…), and a higher number always sits above a lower one, whichever window has focus. Unpinning a window closes the gap: unpin #3 of 5 and #4 and #5 become #3 and #4. Only the window you're working in is shown for real; the others are mirrors stacked by number, with holes cut in lower mirrors where a higher pinned window is shown for real.
-4. **Clicking the mirror** focuses the real window (via Accessibility). The mirror stays up until the real window is actually in front, then gets out of the way so you're working with the real window.
-
-Known limits: with hover focus off, the mirror is view-only until you click it, so scrolling a pinned window while another app is focused doesn't reach it, and the first click focuses the window rather than passing through to whatever you clicked. Turn on hover focus to avoid both. Pins don't persist across relaunches.
-
-## Layout
-
-| File | Purpose |
+| Guide | Contents |
 | --- | --- |
-| `PinpinApp.swift` | App entry point and launch setup |
-| `StatusItemController.swift` | Menu bar button and the dropdown panel, which resizes to its content |
-| `MenuView.swift` | Dropdown UI: settings, window list, Unpin All |
-| `PinManager.swift` | Pinned state, hotkey action, window tracking and occlusion |
-| `HoverFocus.swift` | Focus pinned windows on hover, and hand focus back on leave |
-| `PinOverlay.swift` | Per-window overlay panel with the live mirror |
-| `HotKeyCenter.swift` / `Shortcut.swift` / `Settings.swift` | Global hotkey (Carbon), settings, login item |
-| `Feedback.swift` | Synthesized toggle sounds and the bottom-of-screen toast |
-| `WindowList.swift` / `Permissions.swift` | Window enumeration, coordinates, permissions, focusing |
+| [Usage](docs/USAGE.md) | Hotkey, menu bar dropdown, pin numbering, focus on hover, settings |
+| [Permissions](docs/PERMISSIONS.md) | Why Pinpin needs each permission, granting it, and fixing stale grants |
+| [How it works](docs/HOW-IT-WORKS.md) | How Pinpin keeps windows on top, and its known limitations |
+| [Development](docs/DEVELOPMENT.md) | Building from source, code signing, releasing, code layout |
 
 ## License
 
