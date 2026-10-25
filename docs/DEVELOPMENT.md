@@ -6,6 +6,7 @@
 - [Build and run](#build-and-run)
 - [Code signing](#code-signing)
 - [Releasing](#releasing)
+- [README images](#readme-images)
 - [Code layout](#code-layout)
 
 ## Requirements
@@ -68,6 +69,17 @@ The script:
 - Builds a universal app and packages it into a DMG with the usual drag-to-Applications layout.
 - Publishes the release with notes generated from merged pull requests.
 
+## README images
+
+The demo GIF and the social preview image are drawn by scripts, so you can regenerate them after UI changes without recording your screen:
+
+```sh
+swift scripts/render-demo.swift            # writes assets/demo.gif
+swift scripts/render-social-preview.swift  # writes assets/social-preview.png
+```
+
+The demo is a mock. It only draws what Pinpin really shows (the menu bar icon and the Activated/Deactivated pill), so update `render-demo.swift` if those change. After regenerating the social preview, upload it in **Settings → General → Social preview** on GitHub.
+
 ## Code layout
 
 | Path | Purpose |
@@ -87,6 +99,6 @@ The script:
 | `Sources/Pinpin/PinIcon.swift` | Custom pin icons |
 | `Resources/Info.plist` | Bundle metadata and version |
 | `assets/` | App icon master and pin icon SVGs |
-| `scripts/` | Build, signing, and release scripts |
+| `scripts/` | Build, signing, release, and README image scripts |
 
 For how the pieces fit together, see [How it works](HOW-IT-WORKS.md).
