@@ -60,6 +60,12 @@ See [Usage](docs/USAGE.md) for every feature and setting.
 | [How it works](docs/HOW-IT-WORKS.md) | How Pinpin keeps windows on top, and its known limitations |
 | [Development](docs/DEVELOPMENT.md) | Building from source, code signing, releasing, code layout |
 
+## Contributing
+
+Bug reports, ideas and pull requests are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) to get started, or pick up a [good first issue](https://github.com/bunkhq/Pinpin/labels/good%20first%20issue).
+
+If Pinpin is useful to you, a ⭐ helps other people find it.
+
 ## License
 
 MIT. See [LICENSE](LICENSE).
