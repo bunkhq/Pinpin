@@ -32,7 +32,7 @@ body:
     id: pinpin-version
     attributes:
       label: Pinpin version
-      description: In Finder, select Pinpin in Applications and choose File → Get Info.
+      description: Shown at the bottom of the menu bar dropdown. In older versions, select Pinpin in Applications and choose File → Get Info.
       placeholder: e.g. 1.0.0
     validations:
       required: true
