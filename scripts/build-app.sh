@@ -12,7 +12,9 @@ if [[ -n "${PINPIN_UNIVERSAL:-}" ]]; then
   SLICES=()
   for arch in arm64 x86_64; do
     swift build -c release --package-path "$ROOT" --triple "$arch-apple-macosx14.0"
-    SLICES+=("$(swift build -c release --package-path "$ROOT" --triple "$arch-apple-macosx14.0" --show-bin-path)/Pinpin")
+    # Newer SwiftPM builds every triple into the same bin path, so copy each slice out before the next build.
+    cp "$(swift build -c release --package-path "$ROOT" --triple "$arch-apple-macosx14.0" --show-bin-path)/Pinpin" "$ROOT/build/Pinpin-$arch"
+    SLICES+=("$ROOT/build/Pinpin-$arch")
   done
   lipo -create "${SLICES[@]}" -output "$BIN"
 else

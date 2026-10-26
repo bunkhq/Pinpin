@@ -1,0 +1,27 @@
+name: Build
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build app
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Build universal Pinpin.app
+        run: PINPIN_UNIVERSAL=1 ./scripts/build-app.sh
+      - name: Check both architectures
+        run: |
+          for arch in arm64 x86_64; do
+            lipo build/Pinpin.app/Contents/MacOS/Pinpin -verify_arch "$arch"
+          done
